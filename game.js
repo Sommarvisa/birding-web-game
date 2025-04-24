@@ -44,7 +44,7 @@ updateDisplay();
 function saveGameState() {
     localStorage.setItem('birdJournal', JSON.stringify(birdJournal));
     localStorage.setItem('knowledgeStat', knowledgeStat.toString());
-    localStorage.setItem('walking', stats.walking.toString());
+    localStorage.setItem('walkingStat', stats.walkingStat.toString());
     localStorage.setItem('birdLog', JSON.stringify(birdLog));
     localStorage.setItem('location', currentLocation)
     locations.forEach(loc => {
@@ -61,12 +61,13 @@ function saveGameState() {
     const savedKnowledge = localStorage.getItem('knowledgeStat');
     const savedLog = localStorage.getItem('birdLog');
     const savedLocation = localStorage.getItem('location');
+    const savedWalkingStat = localStorage.getItem('walkingStat');
+
     locations.forEach(loc => {
         const savedStat = localStorage.getItem(`stat_${loc.name}`);
         const savedProgress = localStorage.getItem(`progress_${loc.name}`);
         const savedPause = localStorage.getItem(`paused_${loc.name}`);
-
-      if (savedWalking) stats.walking = parseInt(savedWalking);
+        
         if (savedStat !== null) locationStats[loc.name] = parseInt(savedStat);
         if (savedProgress !== null) locationProgress[loc.name] = parseFloat(savedProgress);
         if (savedPause !== null) isPausedByLocation[loc.name] = savedPause === 'true';
@@ -76,7 +77,7 @@ function saveGameState() {
   
     if (savedJournal) birdJournal = JSON.parse(savedJournal);
     if (savedKnowledge) knowledgeStat = parseInt(savedKnowledge);
-    if (savedWalking) walking = parseInt(savedWalking);
+    if (savedWalkingStat) walkingStat = parseInt(savedWalkingStat);
     if (savedLog) birdLog = JSON.parse(savedLog);
     if (savedLocation) currentLocation = savedLocation;
 
@@ -88,16 +89,16 @@ function getWalkingSpeed(stat) {
 }
 
 function doWalk() {
-  walking++;
-  walkingProgressValue = 0;
-  calculateRemainingTime();
-  updateDisplay();
-  doObserve();
-  saveGameState();
-}
+    walking++;
+    walkingProgressValue = 0;
+    calculateRemainingTime();
+    updateDisplay();
+    doObserve();
+    saveGameState();
+  }
 
 function updateDisplay() {
-  walkingStatDisplay.textContent = stats.walking;
+    document.getElementById('walkingStatDisplay').textContent = stats.walkingStat;
   updateCountdownDisplay();
 }
 
