@@ -2,6 +2,7 @@ import { birdList, getRandomBird } from './birds.js';
 import { updateBirdJournalDisplay } from './journal.js';
 import {
   walkingStatDisplay,
+  exploringStatDisplay,
   walkingClickable,
   walkingProgress,
   walkingLabel,
@@ -20,7 +21,8 @@ import {
     locationStats,
     locationProgress,
     isPausedByLocation,
-    startLoopFor
+    startLoopFor,
+    renderSubnav
   } from './locations.js';  
 
   import { stats
@@ -45,6 +47,7 @@ export function saveGameState() {
     localStorage.setItem('birdJournal', JSON.stringify(birdJournal));
     localStorage.setItem('knowledgeStat', knowledgeStat.toString());
     localStorage.setItem('walkingStat', stats.walkingStat.toString());
+    localStorage.setItem('exploringStat', stats.exploringStat.toString());
     localStorage.setItem('birdLog', JSON.stringify(birdLog));
     localStorage.setItem('location', currentLocation)
     locations.forEach(loc => {
@@ -62,6 +65,7 @@ export function saveGameState() {
     const savedLog = localStorage.getItem('birdLog');
     const savedLocation = localStorage.getItem('location');
     const savedWalkingStat = localStorage.getItem('walkingStat');
+    const savedExploringStat = localStorage.getItem('ExploringStat');
 
     locations.forEach(loc => {
         const savedStat = localStorage.getItem(`stat_${loc.name}`);
@@ -73,11 +77,18 @@ export function saveGameState() {
         if (savedPause !== null) isPausedByLocation[loc.name] = savedPause === 'true';
       });
       
+      renderSubnav(currentLocation, newLoc => {
+        currentLocation = newLoc;
+        renderLocationActions(currentLocation);
+        saveGameState();
+      });
+      
       
   
     if (savedJournal) birdJournal = JSON.parse(savedJournal);
     if (savedKnowledge) knowledgeStat = parseInt(savedKnowledge);
     if (savedWalkingStat) stats.walkingStat = parseInt(savedWalkingStat);
+    if (savedExploringStat) stats.exploringStat = parseInt(savedExploringStat);
     if (savedLog) birdLog = JSON.parse(savedLog);
     if (savedLocation) currentLocation = savedLocation;
 
@@ -86,7 +97,14 @@ export function saveGameState() {
 
 export function updateDisplay() {
     document.getElementById('walkingStatDisplay').textContent = stats.walkingStat;
+    document.getElementById('exploringStatDisplay').textContent = stats.exploringStat;
   updateCountdownDisplay();
+  renderSubnav(currentLocation, newLoc => {
+    currentLocation = newLoc;
+    renderLocationActions(currentLocation);
+    saveGameState();
+  });
+  
 }
 
 export function performObserve() {
