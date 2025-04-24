@@ -1,4 +1,4 @@
-import { birdList, getRandomBird, firstTimeBirds } from './birds.js';
+import { birdList, getRandomBird } from './birds.js';
 import { updateBirdJournalDisplay } from './journal.js';
 import {
   walkingStatDisplay,
@@ -104,6 +104,8 @@ function observeBird() {
   logBirdSighting(bird.name, isNew);
 }
 
+let firstTimeBirds = [];
+
 function addToJournal(birdName) {
   if (!birdJournal.includes(birdName)) {
     birdJournal.push(birdName);
@@ -132,9 +134,8 @@ function updateBirdLogDisplay() {
 
   let entries = birdLog;
   if (filterValue === 'firstTime') {
-    entries = birdLog.filter(entry =>
-      firstTimeBirds.some(bird => entry.includes(bird))
-    );
+    entries = birdLog.filter(entry => entry.includes("for the first time!"));
+
   }
 
   entries.forEach(entry => {

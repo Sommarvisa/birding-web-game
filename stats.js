@@ -1,7 +1,6 @@
-// stats.js
 export const stats = {
-    walking: 0,
-    exploring: 0,
-    knowledge: 0
+    walkingStat: 0,
+    exploringStat: 0,
+    knowledgeStat: 0
   };
   

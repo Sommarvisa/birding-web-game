@@ -3,7 +3,8 @@
 // === UI ELEMENT REFERENCES ===
 
 // Stats
-export const walkingStatDisplay = document.getElementById('walkingStat');
+export const walkingStatDisplay = document.getElementById('walkingStatDisplay');
+export const exploringStatDisplay = document.getElementById('exploringStatDisplay');
 
 // Progress bar
 export const walkingClickable = document.getElementById('walkingClickable');
