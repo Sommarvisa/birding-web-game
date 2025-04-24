@@ -41,7 +41,7 @@ renderLocationActions(currentLocation);
 updateActiveLocationUI(currentLocation);
 updateDisplay();
 
-function saveGameState() {
+export function saveGameState() {
     localStorage.setItem('birdJournal', JSON.stringify(birdJournal));
     localStorage.setItem('knowledgeStat', knowledgeStat.toString());
     localStorage.setItem('walkingStat', stats.walkingStat.toString());
@@ -77,38 +77,19 @@ function saveGameState() {
   
     if (savedJournal) birdJournal = JSON.parse(savedJournal);
     if (savedKnowledge) knowledgeStat = parseInt(savedKnowledge);
-    if (savedWalkingStat) walkingStat = parseInt(savedWalkingStat);
+    if (savedWalkingStat) stats.walkingStat = parseInt(savedWalkingStat);
     if (savedLog) birdLog = JSON.parse(savedLog);
     if (savedLocation) currentLocation = savedLocation;
 
     updateBirdLogDisplay();
-  }  
-
-function getWalkingSpeed(stat) {
-  return 1 + stat * 0.05;
-}
-
-function doWalk() {
-    walking++;
-    walkingProgressValue = 0;
-    calculateRemainingTime();
-    updateDisplay();
-    doObserve();
-    saveGameState();
   }
 
-function updateDisplay() {
+export function updateDisplay() {
     document.getElementById('walkingStatDisplay').textContent = stats.walkingStat;
   updateCountdownDisplay();
 }
 
-function calculateRemainingTime() {
-  const walkingSpeed = getWalkingSpeed(walking);
-  const remainingProgress = walkingGoal - walkingProgressValue;
-  remainingTime = remainingProgress / walkingSpeed;
-}
-
-export function doObserve() {
+export function performObserve() {
   const roll = Math.floor(Math.random() * 101);
   if (roll <= observingChance) {
     observeBird();
