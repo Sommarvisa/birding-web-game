@@ -1,18 +1,26 @@
 // === ui.js ===
 
+// === UI ELEMENT REFERENCES ===
+
+// Stats
 export const walkingStatDisplay = document.getElementById('walkingStat');
-export const walkingProgress = document.getElementById('walkingProgress');
+
+// Progress bar
 export const walkingClickable = document.getElementById('walkingClickable');
+export const walkingProgress = document.getElementById('walkingProgress');
 export const walkingLabel = document.getElementById('walkingLabel');
 export const countdownDisplay = document.getElementById('countdownDisplay');
-export const birdJournalList = document.getElementById('birdJournalList');
-export const birdLogList = document.getElementById('birdLogList');
-export const birdCount = document.getElementById('birdCount');
+
+// Log
 export const logFilter = document.getElementById('logFilter');
-export const journalTabButton = document.getElementById('journalTabButton');
-export const mainTabButton = document.getElementById('mainTabButton');
-export const journalTab = document.getElementById('journalTab');
-export const mainTab = document.getElementById('mainTab');
+export const birdLogList = document.getElementById('birdLogList');
+
+// Journal (only needed on journal.html)
+export const birdJournalList = document.getElementById('birdJournalList');
+export const birdCount = document.getElementById('birdCount');
+
+// Buttons
+export const clearSaveButton = document.getElementById('clearSaveButton');
 
 export function updateCountdownDisplay(remainingTime) {
   let displayTime = remainingTime;
@@ -31,8 +39,6 @@ export function updateCountdownDisplay(remainingTime) {
     displayTime = remainingTime / 60;
     unit = 'min';
   }
-
-  countdownDisplay.textContent = `${Math.floor(displayTime)} ${unit}`;
 }
 
 export function updateBirdCount(currentCount, totalCount) {

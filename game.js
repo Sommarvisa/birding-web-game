@@ -1,25 +1,87 @@
 import { birdList, getRandomBird, firstTimeBirds } from './birds.js';
 import { updateBirdJournalDisplay } from './journal.js';
+import {
+  walkingStatDisplay,
+  walkingClickable,
+  walkingProgress,
+  walkingLabel,
+  countdownDisplay,
+  logFilter,
+  birdLogList,
+  birdJournalList,
+  birdCount,
+  clearSaveButton,
+  updateCountdownDisplay
+} from './ui.js';
+import {
+    renderLocationActions,
+    togglePause,
+    locations,
+    locationStats,
+    locationProgress,
+    isPausedByLocation,
+    startLoopFor
+  } from './locations.js';  
+
+  import { stats
+  } from './stats.js'
 
 export let birdJournal = [];
 export let knowledgeStat = 0;
 
-let walking = 0;
-let walkingProgressValue = 0;
-let walkingGoal = 4;
 let isPaused = true;
 let remainingTime = 0;
 let observingChance = 100;
-
-const walkingStatDisplay = document.getElementById('walkingStat');
-const walkingProgress = document.getElementById('walkingProgress');
-const walkingClickable = document.getElementById('walkingClickable');
-const walkingLabel = document.getElementById('walkingLabel');
-const countdownDisplay = document.getElementById('countdownDisplay');
-const birdLogList = document.getElementById('birdLogList');
-const logFilter = document.getElementById('logFilter');
+let currentLocation = 'Park';
 
 let birdLog = [];
+
+loadGameState();
+renderLocationActions(currentLocation);
+updateActiveLocationUI(currentLocation);
+updateDisplay();
+
+function saveGameState() {
+    localStorage.setItem('birdJournal', JSON.stringify(birdJournal));
+    localStorage.setItem('knowledgeStat', knowledgeStat.toString());
+    localStorage.setItem('walking', stats.walking.toString());
+    localStorage.setItem('birdLog', JSON.stringify(birdLog));
+    localStorage.setItem('location', currentLocation)
+    locations.forEach(loc => {
+        localStorage.setItem(`stat_${loc.name}`, locationStats[loc.name]);
+        localStorage.setItem(`progress_${loc.name}`, locationProgress[loc.name]);
+        localStorage.setItem(`paused_${loc.name}`, isPausedByLocation[loc.name]);
+      });
+      
+      
+  }
+
+  function loadGameState() {
+    const savedJournal = localStorage.getItem('birdJournal');
+    const savedKnowledge = localStorage.getItem('knowledgeStat');
+    const savedLog = localStorage.getItem('birdLog');
+    const savedLocation = localStorage.getItem('location');
+    locations.forEach(loc => {
+        const savedStat = localStorage.getItem(`stat_${loc.name}`);
+        const savedProgress = localStorage.getItem(`progress_${loc.name}`);
+        const savedPause = localStorage.getItem(`paused_${loc.name}`);
+
+      if (savedWalking) stats.walking = parseInt(savedWalking);
+        if (savedStat !== null) locationStats[loc.name] = parseInt(savedStat);
+        if (savedProgress !== null) locationProgress[loc.name] = parseFloat(savedProgress);
+        if (savedPause !== null) isPausedByLocation[loc.name] = savedPause === 'true';
+      });
+      
+      
+  
+    if (savedJournal) birdJournal = JSON.parse(savedJournal);
+    if (savedKnowledge) knowledgeStat = parseInt(savedKnowledge);
+    if (savedWalking) walking = parseInt(savedWalking);
+    if (savedLog) birdLog = JSON.parse(savedLog);
+    if (savedLocation) currentLocation = savedLocation;
+
+    updateBirdLogDisplay();
+  }  
 
 function getWalkingSpeed(stat) {
   return 1 + stat * 0.05;
@@ -31,34 +93,12 @@ function doWalk() {
   calculateRemainingTime();
   updateDisplay();
   doObserve();
+  saveGameState();
 }
 
 function updateDisplay() {
-  walkingStatDisplay.textContent = walking;
-  walkingLabel.textContent = `Walking in the Park`;
+  walkingStatDisplay.textContent = stats.walking;
   updateCountdownDisplay();
-}
-
-function updateCountdownDisplay() {
-  let displayTime = remainingTime;
-  let unit = 's';
-  if (remainingTime >= 60) {
-    displayTime = remainingTime / 60;
-    unit = 'min';
-  }
-  if (remainingTime >= 3600) {
-    displayTime = remainingTime / 3600;
-    unit = 'h';
-  }
-  if (remainingTime >= 86400) {
-    displayTime = remainingTime / 86400;
-    unit = 'd';
-  }
-  if (remainingTime >= 31536000) {
-    displayTime = remainingTime / 31536000;
-    unit = 'y';
-  }
-  countdownDisplay.textContent = `${Math.floor(displayTime)} ${unit}`;
 }
 
 function calculateRemainingTime() {
@@ -67,7 +107,7 @@ function calculateRemainingTime() {
   remainingTime = remainingProgress / walkingSpeed;
 }
 
-function doObserve() {
+export function doObserve() {
   const roll = Math.floor(Math.random() * 101);
   if (roll <= observingChance) {
     observeBird();
@@ -87,8 +127,10 @@ function addToJournal(birdName) {
     birdJournal.push(birdName);
     firstTimeBirds.push(birdName);
     updateBirdJournalDisplay(); // Update journal grid
+    saveGameState();
     return true;
   }
+  saveGameState();
   return false;
 }
 
@@ -120,15 +162,6 @@ function updateBirdLogDisplay() {
   });
 }
 
-walkingClickable.addEventListener('click', () => {
-  isPaused = !isPaused;
-  walkingProgress.style.backgroundColor = isPaused ? '#bbb' : '#4a6741';
-  if (!isPaused) {
-    lastTime = performance.now();
-    requestAnimationFrame(gameLoop);
-  }
-});
-
 let lastTime = performance.now();
 updateDisplay();
 requestAnimationFrame(gameLoop);
@@ -148,3 +181,41 @@ function gameLoop(currentTime) {
   updateDisplay();
   requestAnimationFrame(gameLoop);
 }
+
+document.querySelectorAll('.subnav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const selected = link.textContent.trim();
+      currentLocation = selected;
+      saveGameState();
+      updateActiveLocationUI(selected);
+      renderLocationActions(selected); // update visible progress bar!
+    });
+  });
+  
+  
+  function updateActiveLocationUI(selected) {
+    document.querySelectorAll('.subnav-link').forEach(link => {
+      if (link.textContent.trim() === selected) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderLocationActions(currentLocation);
+    startLoopFor(currentLocation);
+  });
+  
+
+
+if (clearSaveButton) {
+    clearSaveButton.addEventListener('click', () => {
+      if (confirm("Are you sure you want to clear your save?")) {
+        localStorage.clear();
+        location.reload();
+      }
+    });
+  }

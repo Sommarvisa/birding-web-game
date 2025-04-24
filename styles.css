@@ -11,6 +11,7 @@ header {
   padding: 1rem;
   text-align: center;
   border-bottom: 1px solid #b8cbb8;
+  position: relative;
 }
 
 header h1 {
@@ -27,6 +28,32 @@ nav a.tab-link {
   color: #3e594c;
   text-decoration: none;
   border-radius: 6px;
+}
+
+.subnav {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #e8f1e3;
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid #c8d8c0;
+}
+
+.subnav-link {
+  text-decoration: none;
+  color: #3e594c;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.subnav-link:hover {
+  background-color: #d8e7d2;
+}
+
+.subnav-link.active {
+  background-color: #cbe8ba;
 }
 
 /* Layout */
@@ -53,6 +80,12 @@ main.layout {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+.top-right {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 /* Progress Bar */
@@ -136,33 +169,57 @@ main.layout {
   border-bottom: none;
 }
 
+.danger-button {
+  background-color: #cc4444;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.danger-button:hover {
+  background-color: #a33333;
+}
+
+/* Journal */
+
 .journal-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 1rem;
   list-style: none;
-  padding: 0;
+  padding: 1rem 0;
 }
 
 .journal-entry {
-  text-align: center;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-}
-
-.spotted {
-  background-color: #e0ffe0;
-  font-weight: bold;
-}
-
-.unspotted {
+  height: 100px;
   background-color: #f0f0f0;
-  color: #888;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  transition: transform 0.2s ease-in-out;
 }
 
-.locked {
-  background-color: #ddd;
-  font-style: italic;
-  color: #aaa;
+.journal-entry.spotted {
+  background-color: #d6f5d6;
+  color: #2f5e2f;
+}
+
+.journal-entry.unspotted {
+  background-color: #e0e0e0;
+  color: #999;
+}
+
+.journal-entry.locked {
+  background-color: #cccccc;
+  color: #888;
+  font-size: 2rem;
 }

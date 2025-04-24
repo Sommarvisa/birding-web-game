@@ -1,62 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Birding Game</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birding Game</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-    <header>
-        <h1>Birding Game</h1>
-        <nav>
-            <a href="index.html" class="tab-link">Main</a>
-            <a href="journal.html" class="tab-link">Journal</a>
-        </nav>
-        <button id="clearSaveButton" class="danger-button top-right">Clear Save</button>
-    </header>
+  <header>
+    <h1>Birding Game</h1>
+    <nav>
+        <a href="index.html" class="tab-link">Main</a>
+      <a href="journal.html" class="tab-link">Journal</a>
+    </nav>
+    <button id="clearSaveButton" class="danger-button top-right">Clear Save</button>
+  </header>
 
-    <nav class="subnav">
-        <a href="" class="subnav-link active">Park</a>
-        <a href="" class="subnav-link">Forest</a>
-        <a href="" class="subnav-link">Dunes</a>
-        <a href="" class="subnav-link">Grassland</a>
-        <a href="" class="subnav-link">Wetland</a>
-        <a href="" class="subnav-link">River</a>
-        <a href="" class="subnav-link">Ocean</a>
-      </nav>      
+  <nav class="subnav"> 
+    <a href="#" class="subnav-link active">Park</a>
+    <a href="#" class="subnav-link">Forest</a>
+    <a href="#" class="subnav-link">Dunes</a>
+    <a href="#" class="subnav-link">Grassland</a>
+    <a href="#" class="subnav-link">Wetland</a>
+    <a href="#" class="subnav-link">River</a>
+    <a href="#" class="subnav-link">Ocean</a>
+  </nav>
 
-    <main class="layout">
-        <!-- Sidebar for stats -->
-        <aside class="sidebar">
-            <h2>Stats</h2>
-            <p><strong>Walking:</strong> <span id="walkingStat">0</span></p>
-        </aside>
+  <main class="layout">
+    <!-- Sidebar for stats -->
+    <aside class="sidebar">
+      <h2>Stats</h2>
+      <p><strong>Walking:</strong> <span id="walkingStat">0</span></p>
+    </aside>
 
-        <!-- Main action panel -->
-        <section class="right-panel">
-            <div class="progress-section">
-                <div id="walkingClickable" class="progress-bar">
-                    <div id="walkingProgress" class="progress-fill"></div>
-                    <span id="countdownDisplay" class="countdown-overlay">0s</span>
-                </div>
-                <p id="walkingLabel" class="progress-label">Walking in the Park</p>
-            </div>
+    <!-- Main action panel -->
+    <section class="right-panel">
+      <div id="actionContainer" class="progress-group"></div>
 
-            <section class="log">
-                <label for="logFilter">Log Filter:</label>
-                <select id="logFilter">
-                    <option value="all">All Sightings</option>
-                    <option value="firstTime">First-Time Sightings</option>
-                </select>
-                <ul id="birdLogList" class="log-list"></ul>
-            </section>
-        </section>
-    </main>
+      <section class="log">
+        <label for="logFilter">Log Filter:</label>
+        <select id="logFilter">
+          <option value="all">All Sightings</option>
+          <option value="firstTime">First-Time Sightings</option>
+        </select>
+        <ul id="birdLogList" class="log-list"></ul>
+      </section>
+    </section>
+  </main>
 
-    <script type="module" src="game.js"></script>
+  <script type="module" src="game.js"></script>
 </body>
-
 </html>
