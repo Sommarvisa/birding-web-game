@@ -1,156 +1,279 @@
+/* Base Styles */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Georgia', serif;
-    background-color: #f4f1ed;
-    color: #333;
-  }
-  
-  #container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 30px;
-    gap: 40px;
-  }
-  
-  #leftPanel {
-    width: 160px;
-    background-color: #fff9f0;
-    border: 2px solid #e3d8c4;
-    border-radius: 10px;
-    padding: 16px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.05);
-  }
-  
-  #leftPanel p {
-    margin: 10px 0;
-    font-size: 1rem;
-    font-weight: bold;
-  }
-  
-  #centerPanel {
-    flex: 1;
-    text-align: center;
-    background-color: #fffdf9;
-    border: 2px solid #e3d8c4;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.05);
-    position: relative;
-  }
-  
-  #walkingClickable {
-    height: 40px;
-    width: 100%;
-    background-color: #ccc;
-    border-radius: 6px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid #bbb;
-    position: relative;
-  }
-  
-  #walkingProgress {
-    height: 100%;
-    background-color: 	#3f5a36;
-    width: 0%;
-    transition: width 0.2s;
-  }
-  
-  #walkingLabel {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top: 10px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  #countdownDisplay {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 0.85rem;
-    color: #555;
-  }
-  
-  #birdJournalContainer {
-    width: 200px;
-    max-height: 80vh;
-    background-color: #fff9f0;
-    border: 2px solid #e3d8c4;
-    border-radius: 10px;
-    padding: 16px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.05);
-    overflow-y: auto;
-  }
-  
-  #birdJournalContainer h3 {
-    margin-top: 0;
-    font-size: 1.1rem;
-    color: #5a4b41;
-    text-align: center;
-  }
-  
-  #birdJournalList {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  #birdJournalList li {
-    padding: 6px 10px;
-    margin-bottom: 6px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    color: #3a3a3a;
-  }
-  
-  #birdJournalList li.new-entry {
-    background-color: #e3f5e0;
-    border-color: #b4e2b0;
-    font-weight: bold;
-  }
-
-  #birdLogContainer {
-    width: 100%;
-    max-width: 800px;
-    margin: 40px auto 0 auto;
-    background-color: #fffdf9;
-    border: 2px solid #e3d8c4;
-    border-radius: 10px;
-    padding: 16px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.05);
-    font-family: 'Georgia', serif;
-  }
-  
-  #birdLogContainer h3 {
-    margin-top: 0;
-    font-size: 1.1rem;
-    color: #5a4b41;
-    text-align: center;
-  }
-  
-  #birdLogList {
-    list-style-type: none;
-    padding-left: 0;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  
-  #birdLogList li {
-    font-size: 0.9rem;
-    padding: 4px 8px;
-    border-bottom: 1px dotted #ccc;
-    color: #3a3a3a;
-  }
-  
-  #journalTab {
-    display: none; /* Start hidden until tab is selected */
-    margin: 20px;
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background-color: #f4f3ec;
+  color: #333;
 }
+
+header {
+  background-color: #d4e3d3;
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #b8cbb8;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #3e594c;
+}
+
+nav a.tab-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background-color: #b8cbb8;
+  color: #3e594c;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+/* Layout */
+main.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.top-section {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.sidebar {
+  flex: 1;
+  min-width: 100px;
+}
+
+.center {
+  flex: 3;
+}
+
+/* Progress Bar */
+.progress-bar {
+  position: relative;
+  width: 100%;
+  height: 36px;
+  background-color: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #bbb;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background-color: #4a6741;
+  transition: width 0.2s ease-in-out;
+}
+
+.countdown-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  line-height: 36px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* Label under the bar */
+.progress-label {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  color: #4a6741;
+}
+
+/* Log Section */
+.log {
+  padding: 1rem 0;
+}
+
+.log label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.log-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.log-list li {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.log-list li:last-child {
+  border-bottom: none;
+}
+
+
+
+/* #container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 30px;
+  gap: 40px;
+}
+
+#leftPanel {
+  width: 160px;
+  background-color: #fff9f0;
+  border: 2px solid #e3d8c4;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+#leftPanel p {
+  margin: 10px 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#centerPanel {
+  flex: 1;
+  text-align: center;
+  background-color: #fffdf9;
+  border: 2px solid #e3d8c4;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+#walkingClickable {
+  height: 40px;
+  width: 100%;
+  background-color: #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #bbb;
+  position: relative;
+}
+
+#walkingProgress {
+  height: 100%;
+  background-color: #3f5a36;
+  width: 0%;
+  transition: width 0.2s;
+}
+
+#walkingLabel {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+#countdownDisplay {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+#birdJournalContainer {
+  width: 200px;
+  max-height: 80vh;
+  background-color: #fff9f0;
+  border: 2px solid #e3d8c4;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+#birdJournalContainer h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #5a4b41;
+  text-align: center;
+}
+
+#birdJournalList {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#birdJournalList li {
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #3a3a3a;
+}
+
+#birdJournalList li.new-entry {
+  background-color: #e3f5e0;
+  border-color: #b4e2b0;
+  font-weight: bold;
+}
+
+#birdLogContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 40px auto 0 auto;
+  background-color: #fffdf9;
+  border: 2px solid #e3d8c4;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  font-family: 'Georgia', serif;
+}
+
+#birdLogContainer h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #5a4b41;
+  text-align: center;
+}
+
+#birdLogList {
+  list-style-type: none;
+  padding-left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#birdLogList li {
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  border-bottom: 1px dotted #ccc;
+  color: #3a3a3a;
+}
+
+#journalTab {
+  display: none;
+  /* Start hidden until tab is selected
+  margin: 20px;
+} */
 
 .journal-grid {
   display: grid;
