@@ -10,38 +10,36 @@
   <header>
     <h1>Birding Game</h1>
     <nav>
-      <a href="index.html" id="mainTabButton" class="button">Main</a>
-      <a href="journal.html" id="journalTabButton" class="button">Bird Journal</a>
+      <a href="journal.html" class="tab-link">Open Journal</a>
     </nav>
   </header>
 
-  <main id="mainTab">
-    <section class="stats">
-      <p>Walking: <span id="walkingStat">0</span></p>
-      <p>Countdown: <span id="countdownDisplay">0s</span></p>
-    </section>
+  <main class="layout">
+    <div class="top-section">
+      <!-- Left: Stats -->
+      <aside class="sidebar">
+        <p><strong>Walking:</strong> <span id="walkingStat">0</span></p>
+      </aside>
 
-    <section class="progress-bar-container">
-      <div id="walkingClickable" class="progress-bar">
-        <div id="walkingProgress" class="progress-fill"></div>
-      </div>
-      <p id="walkingLabel">Walking in the Park</p>
-    </section>
+      <!-- Center: Progress/Buttons -->
+      <section class="center">
+        <div id="walkingClickable" class="progress-bar">
+          <div id="walkingProgress" class="progress-fill"></div>
+          <span id="countdownDisplay" class="countdown-overlay">0s</span>
+        </div>
+        <p id="walkingLabel" class="progress-label">Walking in the Park</p>
+      </section>
+    </div>
 
-    <section class="log">
-      <label for="logFilter">Filter:</label>
+    <!-- Bottom: Log -->
+
+      <label for="logFilter">Log Filter:</label>
       <select id="logFilter">
         <option value="all">All Sightings</option>
         <option value="firstTime">First-Time Sightings</option>
       </select>
-      <ul id="birdLogList"></ul>
+      <ul id="birdLogList" class="log-list"></ul>
     </section>
-  </main>
-
-  <main id="journalTab" style="display: none;">
-    <h2>Bird Journal</h2>
-    <p>Spotted: <span id="birdCount">0/0</span></p>
-    <ul id="birdJournalList" class="journal-grid"></ul>
   </main>
 
   <script type="module" src="game.js"></script>
