@@ -1,0 +1,186 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Georgia', serif;
+    background-color: #f4f1ed;
+    color: #333;
+  }
+  
+  #container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 30px;
+    gap: 40px;
+  }
+  
+  #leftPanel {
+    width: 160px;
+    background-color: #fff9f0;
+    border: 2px solid #e3d8c4;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  }
+  
+  #leftPanel p {
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  #centerPanel {
+    flex: 1;
+    text-align: center;
+    background-color: #fffdf9;
+    border: 2px solid #e3d8c4;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.05);
+    position: relative;
+  }
+  
+  #walkingClickable {
+    height: 40px;
+    width: 100%;
+    background-color: #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #bbb;
+    position: relative;
+  }
+  
+  #walkingProgress {
+    height: 100%;
+    background-color: 	#3f5a36;
+    width: 0%;
+    transition: width 0.2s;
+  }
+  
+  #walkingLabel {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  #countdownDisplay {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 0.85rem;
+    color: #555;
+  }
+  
+  #birdJournalContainer {
+    width: 200px;
+    max-height: 80vh;
+    background-color: #fff9f0;
+    border: 2px solid #e3d8c4;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    overflow-y: auto;
+  }
+  
+  #birdJournalContainer h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #5a4b41;
+    text-align: center;
+  }
+  
+  #birdJournalList {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  #birdJournalList li {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #3a3a3a;
+  }
+  
+  #birdJournalList li.new-entry {
+    background-color: #e3f5e0;
+    border-color: #b4e2b0;
+    font-weight: bold;
+  }
+
+  #birdLogContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto 0 auto;
+    background-color: #fffdf9;
+    border: 2px solid #e3d8c4;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.05);
+    font-family: 'Georgia', serif;
+  }
+  
+  #birdLogContainer h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #5a4b41;
+    text-align: center;
+  }
+  
+  #birdLogList {
+    list-style-type: none;
+    padding-left: 0;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  #birdLogList li {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border-bottom: 1px dotted #ccc;
+    color: #3a3a3a;
+  }
+  
+  #journalTab {
+    display: none; /* Start hidden until tab is selected */
+    margin: 20px;
+}
+
+.journal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.journal-tile {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    color: white;
+}
+
+.journal-tile.spotted {
+    background-color: #4CAF50; /* Full color for spotted birds */
+}
+
+.journal-tile.not-spotted {
+    background-color: #9E9E9E; /* Grayed-out for unspotted birds */
+}
+
+.journal-tile.locked {
+    background-color: #757575; /* Question mark for locked birds */
+}
+
+  

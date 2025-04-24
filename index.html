@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birding Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Birding Game</h1>
+    <nav>
+      <button id="mainTabButton">Main</button>
+      <button id="journalTabButton">Bird Journal</button>
+    </nav>
+  </header>
+
+  <main id="mainTab">
+    <section class="stats">
+      <p>Walking: <span id="walkingStat">0</span></p>
+      <p>Countdown: <span id="countdownDisplay">0s</span></p>
+    </section>
+
+    <section class="progress-bar-container">
+      <div id="walkingClickable" class="progress-bar">
+        <div id="walkingProgress" class="progress-fill"></div>
+      </div>
+      <p id="walkingLabel">Walking in the Park</p>
+    </section>
+
+    <section class="log">
+      <label for="logFilter">Filter:</label>
+      <select id="logFilter">
+        <option value="all">All Sightings</option>
+        <option value="firstTime">First-Time Sightings</option>
+      </select>
+      <ul id="birdLogList"></ul>
+    </section>
+  </main>
+
+  <main id="journalTab" style="display: none;">
+    <h2>Bird Journal</h2>
+    <p>Spotted: <span id="birdCount">0/0</span></p>
+    <ul id="birdJournalList" class="journal-grid"></ul>
+  </main>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>
