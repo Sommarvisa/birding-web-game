@@ -3,12 +3,12 @@ import { performAction } from './actions.js';
 
 export const locations = [
   { name: 'Park', goal: 10, label: 'Strolling in the Park', actionType: 'walk' },
-  { name: 'Forest', goal: 14, label: 'Hiking in the Forest' },
-  { name: 'Dunes', goal: 12, label: 'Roam the Dunes' },
-  { name: 'Grassland', goal: 11, label: 'Wandering the Meadows' },
-  { name: 'Wetland', goal: 16, label: 'Wading the Marshes' },
-  { name: 'River', goal: 13, label: 'Following the Riverbank' },
-  { name: 'Ocean', goal: 18, label: 'Walking the Shoreline' }
+  { name: 'Forest', goal: 14, label: 'Hiking in the Forest', actionType: 'walk', unlockCondition: () => stats.exploringStat >= 5 },
+  { name: 'Dunes', goal: 12, label: 'Roam the Dunes', actionType: 'walk', unlockCondition: () => stats.exploringStat >= 10 },
+  { name: 'Grassland', goal: 11, label: 'Wandering the Meadows', actionType: 'walk', unlockCondition: () => stats.exploringStat >= 10 },
+  { name: 'Wetland', goal: 16, label: 'Wading the Marshes', actionType: 'walk', unlockCondition: () => stats.exploringStat >= 10 },
+  { name: 'River', goal: 13, label: 'Following the Riverbank', actionType: 'walk', unlockCondition: () => stats.exploringStat >= 10 },
+  { name: 'Ocean', goal: 18, label: 'Walking the Shoreline', actionType: 'walk', unlockCondition: () => stats.exploringStat >= 10 }
 ];
 
 export let locationStats = {};
@@ -91,6 +91,58 @@ function renderProgressBar({ location, actionType, label, goal }) {
   startLoopFor(progressKey, goal, actionType, location);
 }
 
+export function renderSubnav(currentLocation, onSelectLocation) {
+    const container = document.querySelector('.subnav');
+    if (!container) return;
+    container.innerHTML = '';
+  
+    locations.forEach(location => {
+      const isUnlocked = !location.unlockCondition || location.unlockCondition();
+      if (!isUnlocked) return;
+  
+      const link = document.createElement('a');
+      link.href = '#';
+      link.className = 'subnav-link';
+      link.textContent = location.name;
+      if (location.name === currentLocation) {
+        link.classList.add('active');
+      }
+  
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        onSelectLocation(location.name);
+      });
+  
+      container.appendChild(link);
+    });
+  }
+
+  export function initializeProgress() {
+    locations.forEach(location => {
+      const key = `${location.name}-${location.actionType}`;
+      const savedProgress = localStorage.getItem(`progress_${key}`);
+      const savedTime = localStorage.getItem(`lastTime_${key}`);
+  
+      locationProgress[key] = savedProgress ? parseFloat(savedProgress) : 0;
+  
+      if (savedTime) {
+        const elapsed = (Date.now() - parseInt(savedTime)) / 1000;
+        const stat = locationStats[key] ?? 0;
+        const speed = 1 + stat * 0.05;
+        locationProgress[key] += elapsed * speed;
+  
+        const goal = location.goal;
+        if (locationProgress[key] > goal) locationProgress[key] = goal;
+  
+        localStorage.setItem(`progress_${key}`, locationProgress[key]);
+      }
+    });
+  }
+  
+  export function saveLastTime(key) {
+    localStorage.setItem(`lastTime_${key}`, Date.now().toString());
+  }
+
 function updateBarColor(key) {
   const fill = document.querySelector(`#bar-${key} .progress-fill`);
   if (fill) fill.style.backgroundColor = isPausedByLocation[key] ? '#bbb' : '#4a6741';
@@ -106,6 +158,9 @@ export function togglePause(key) {
       lastTimestamps[key] = performance.now();
       requestAnimationFrame(timestamp => runLoop(key, timestamp, config.goal, config.actionType, config.location));
     }
+    else {
+        saveLastTime(key); // Save when paused
+      }
   }
 
   function parseKey(key) {
@@ -134,19 +189,20 @@ function runLoop(key, currentTime, goal, actionType, location) {
     : 0;
 
   lastTimestamps[key] = currentTime;
-  if (delta > 1) return;
-
   const stat = locationStats[key] ?? 0;
-  const speed = 1 + stat * 0.05;
+  const speed = 1 + stats.walkingStat * 0.05;
   locationProgress[key] = (locationProgress[key] ?? 0) + speed * delta;
-  localStorage.setItem(`progress_${key}`, locationProgress[key]);
 
+  localStorage.setItem(`progress_${key}`, locationProgress[key]);
+  
   if (locationProgress[key] >= goal) {
     locationStats[key] = (locationStats[key] ?? 0) + 1;
     locationProgress[key] = 0;
     localStorage.setItem(`stat_${key}`, locationStats[key]);
     localStorage.setItem(`progress_${key}`, locationProgress[key]);
     performAction(location, actionType);
+
+    saveLastTime(key);
   }
 
   const fill = document.querySelector(`#bar-${key} .progress-fill`);
