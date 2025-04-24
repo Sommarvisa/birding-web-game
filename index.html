@@ -15,30 +15,30 @@
   </header>
 
   <main class="layout">
-    <div class="top-section">
-      <!-- Left: Stats -->
-      <aside class="sidebar">
-        <p><strong>Walking:</strong> <span id="walkingStat">0</span></p>
-      </aside>
+    <!-- Sidebar for stats -->
+    <aside class="sidebar">
+      <h2>Stats</h2>
+      <p><strong>Walking:</strong> <span id="walkingStat">0</span></p>
+    </aside>
 
-      <!-- Center: Progress/Buttons -->
-      <section class="center">
+    <!-- Main action panel -->
+    <section class="right-panel">
+      <div class="progress-section">
         <div id="walkingClickable" class="progress-bar">
           <div id="walkingProgress" class="progress-fill"></div>
           <span id="countdownDisplay" class="countdown-overlay">0s</span>
         </div>
         <p id="walkingLabel" class="progress-label">Walking in the Park</p>
+      </div>
+
+      <section class="log">
+        <label for="logFilter">Log Filter:</label>
+        <select id="logFilter">
+          <option value="all">All Sightings</option>
+          <option value="firstTime">First-Time Sightings</option>
+        </select>
+        <ul id="birdLogList" class="log-list"></ul>
       </section>
-    </div>
-
-    <!-- Bottom: Log -->
-
-      <label for="logFilter">Log Filter:</label>
-      <select id="logFilter">
-        <option value="all">All Sightings</option>
-        <option value="firstTime">First-Time Sightings</option>
-      </select>
-      <ul id="birdLogList" class="log-list"></ul>
     </section>
   </main>
 
